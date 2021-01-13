@@ -1,11 +1,17 @@
 #Cloud Build Pipeline CICD Template
 steps:
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build','-t','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}','.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
+    - name: 'gcr.io/cloud-builders/git'
+      args: ['clone', 'https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+      id: 'Clone-Repository'
+      waitFor: ['-']
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['build','-t','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}','.']
+      id: 'Build-Code'
+      waitFor: ['Clone-Repository']
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
+      id: 'Push-Image'
+      waitFor: ['Build-Code']
 
 substitutions:
   #GCP Specific configuration. Please DON'T change anything

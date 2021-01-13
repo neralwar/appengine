@@ -34,6 +34,6 @@ substitutions:
   _REPO_NAME: github_neralwar_appengine
   _GKE_CLUSTER: my-first-cluster-1
   _ZONE: us-east1-b
-  _DEPLOYMENTNAME: prod-app
+  _DEPLOYMENTNAME: prod-app-deployment
   # Developers ONLY change
   _VERSION: v2.0

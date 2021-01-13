@@ -38,4 +38,4 @@ substitutions:
   _ZONE: us-east1-b
   _DEPLOYMENTNAME: prod-app-deployment
   # Developers ONLY change
-  _VERSION: v2.0
+  _VERSION: v3.0

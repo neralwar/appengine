@@ -1,0 +1,22 @@
+#Cloud Build Pipeline CICD Template
+steps:
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}','.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
+
+substitutions:
+  #GCP Specific configuration. Please DON'T change anything
+  _PROJECT: sylvan-overview-299914
+  #_ZONE: asia-south1-a
+  #_GKE_CLUSTER: learn-gcp-with-mahesh-gke-cluster
+  
+  #Repository Specific configuration. DevOps can change this settings
+ # _DEPLOYMENTNAME: hello-world-service
+  _CONTAINERNAME:  devopscontainer    
+  _REPO_NAME: github_neralwar_appengine
+  
+  # Developers ONLY change
+  _VERSION: v1.0

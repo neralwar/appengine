@@ -12,6 +12,15 @@ steps:
       args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
       id: 'Push-Image'
       waitFor: ['Build-Code']
+    - name: 'gcr.io/cloud-builders/kubectl'
+      args:
+      - 'set'
+      - 'image'
+      - 'deployment/${_DEPLOYMENTNAME}'
+      - '${_DEPLOYMENTNAME} = gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}'
+      env:
+      - 'CLOUDSDK_COMPUTE_ZONE = ${_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER = ${_GKE_CLUSTER}'
 
 substitutions:
   #GCP Specific configuration. Please DON'T change anything
@@ -23,6 +32,8 @@ substitutions:
  # _DEPLOYMENTNAME: hello-world-service
   _CONTAINERNAME:  devopscontainer    
   _REPO_NAME: github_neralwar_appengine
-  
+  _GKE_CLUSTER: my-first-cluster-1
+  _ZONE: us-east1-b
+  _DEPLOYMENTNAME: prod-app
   # Developers ONLY change
-  _VERSION: v1.0
+  _VERSION: v2.0

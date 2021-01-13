@@ -12,13 +12,13 @@ steps:
       args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
       id: 'Push-Image'
       waitFor: ['Build-Code']
-    - name: 'gcr.io/cloud-builders/gke-deploy'
-      args:
-      - 'run'
-      - --filename=kubernetes.yaml
-      - --image=gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}
-      - --location=${_ZONE}
-      - --cluster=${_GKE_CLUSTER}
+    #- name: 'gcr.io/cloud-builders/gke-deploy'
+     # args:
+     # - 'run'
+     # - --filename=kubernetes.yaml
+      #- --image=gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}
+      #- --location=${_ZONE}
+     # - --cluster=${_GKE_CLUSTER}
       
       env:
       - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
@@ -38,4 +38,4 @@ substitutions:
   _ZONE: us-east1-b
   _DEPLOYMENTNAME: prod-app-deployment
   # Developers ONLY change
-  _VERSION: v3.0
+  _VERSION: v4.0
